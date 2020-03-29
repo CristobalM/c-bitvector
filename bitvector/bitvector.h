@@ -24,11 +24,13 @@
   } while (0)
 
 #define SAFE_OP(op)                                                            \
-  if (op != SUCCESS_ECODE) {                                                   \
-    printf("There was an error while running %s. Error code: %d\n", (#op),     \
-           op);                                                                \
-    return op;                                                                 \
-  }
+  do {                                                                         \
+    if ((op) != SUCCESS_ECODE) {                                               \
+      printf("There was an error while running %s. Error code: %d\n", (#op),   \
+             op);                                                              \
+      return (op);                                                             \
+    }                                                                          \
+  } while (0)
 
 #define BLOCK_INDEX(block_size_in_bits, bit_position)                          \
   ((bit_position) / (block_size_in_bits))
