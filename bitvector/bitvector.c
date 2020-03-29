@@ -4,6 +4,27 @@
 
 #include "bitvector.h"
 
+#define BVCTYPE_BITS sizeof(uint32_t) * 8
+
+#define CONVERT_BITS_TO_CONTAINER_NUM(bits_num, container_type)                \
+  ((bits_num) / sizeof(container_type)) +                                      \
+      (((bits_num) % sizeof(container_type)) > 0 ? 1 : 0)
+
+#define CHECK_BOUNDARIES(input_bitvector, position)                            \
+  do {                                                                         \
+    if ((position) >= (input_bitvector->size_in_bits)) {                       \
+      return ERR_OUT_OF_BOUNDARIES;                                            \
+    }                                                                          \
+  } while (0)
+
+#define BLOCK_INDEX(block_size_in_bits, bit_position)                          \
+  ((bit_position) / (block_size_in_bits))
+
+#define POSITION_IN_BLOCK(block_size_in_bits, bit_position)                    \
+  ((bit_position) % (block_size_in_bits))
+
+#define BITMASK_FROM_POS_IN_BLOCK(pos_in_block) (1 << (31 - (pos_in_block)))
+
 int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_) {
   if (!input_bitvector)
     return ERR_NULL_BITVECTOR;

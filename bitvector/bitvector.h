@@ -3,42 +3,22 @@
 
 #include <stdint.h>
 
-#define CONVERT_BITS_TO_CONTAINER_NUM(bits_num, container_type)                \
-  ((bits_num) / sizeof(container_type)) +                                      \
-      (((bits_num) % sizeof(container_type)) > 0 ? 1 : 0)
-
 #define SUCCESS_ECODE 0
 #define ERR_NULL_BITVECTOR -1
 #define ERR_NULL_BITVECTOR_CONTAINER -2
 #define ERR_OUT_OF_BOUNDARIES -3
 #define ERR_BITS_WRITE_FROM_GT_TO -4
 
-#define BVCTYPE uint32_t
-#define BVCTYPE_BITS sizeof(uint32_t) * 8
-
-#define CHECK_BOUNDARIES(input_bitvector, position)                            \
-  do {                                                                         \
-    if ((position) >= (input_bitvector->size_in_bits)) {                       \
-      return ERR_OUT_OF_BOUNDARIES;                                            \
-    }                                                                          \
-  } while (0)
-
 #define SAFE_OP(op)                                                            \
   do {                                                                         \
     if ((op) != SUCCESS_ECODE) {                                               \
       printf("There was an error while running %s. Error code: %d\n", (#op),   \
-             (op));                                                              \
+             (op));                                                            \
       return (op);                                                             \
     }                                                                          \
   } while (0)
 
-#define BLOCK_INDEX(block_size_in_bits, bit_position)                          \
-  ((bit_position) / (block_size_in_bits))
-
-#define POSITION_IN_BLOCK(block_size_in_bits, bit_position)                    \
-  ((bit_position) % (block_size_in_bits))
-
-#define BITMASK_FROM_POS_IN_BLOCK(pos_in_block) (1 << (31 - (pos_in_block)))
+typedef uint32_t BVCTYPE;
 
 struct bitvector {
   BVCTYPE *container;
