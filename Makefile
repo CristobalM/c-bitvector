@@ -1,5 +1,5 @@
 
-MODULES_DIRS := bitvector
+MODULES_DIRS := bitvector example
 FLAGS := -Wall -Wextra -Werror  -Wl,--fatal-warnings
 
 all: format modules
