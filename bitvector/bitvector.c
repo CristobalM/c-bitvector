@@ -25,6 +25,8 @@
 
 #define BITMASK_FROM_POS_IN_BLOCK(pos_in_block) (1 << (31 - (pos_in_block)))
 
+uint32_t _extract_right_side(uint32_t input_block, uint32_t extract_index);
+
 int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_) {
   if (!input_bitvector)
     return ERR_NULL_BITVECTOR;

@@ -37,6 +37,4 @@ int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
 int bits_read(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
               uint32_t *result);
 
-uint32_t _extract_right_side(uint32_t input_block, uint32_t extract_index);
-
 #endif /* _BITVECTOR_H_ */
