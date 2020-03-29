@@ -27,7 +27,7 @@
   do {                                                                         \
     if ((op) != SUCCESS_ECODE) {                                               \
       printf("There was an error while running %s. Error code: %d\n", (#op),   \
-             op);                                                              \
+             (op));                                                              \
       return (op);                                                             \
     }                                                                          \
   } while (0)
