@@ -7,8 +7,8 @@
 #define BVCTYPE_BITS sizeof(uint32_t) * 8
 
 #define CONVERT_BITS_TO_CONTAINER_NUM(bits_num, container_type)                \
-  ((bits_num) / sizeof(container_type)) +                                      \
-      (((bits_num) % sizeof(container_type)) > 0 ? 1 : 0)
+  (((bits_num) / sizeof(container_type)) +                                     \
+   (((bits_num) % sizeof(container_type)) > 0 ? 1 : 0))
 
 #define CHECK_BOUNDARIES(input_bitvector, position)                            \
   do {                                                                         \
