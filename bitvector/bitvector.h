@@ -2,6 +2,7 @@
 #define _BITVECTOR_H_
 
 #include <stdint.h>
+#include <stdio.h>
 
 #define SUCCESS_ECODE 0
 #define ERR_NULL_BITVECTOR -1
