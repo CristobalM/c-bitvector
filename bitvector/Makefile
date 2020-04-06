@@ -1,14 +1,12 @@
-FLAGS :=  -Wall -Wextra -std=c99 -pedantic -Wmissing-prototypes -Wstrict-prototypes \
-    -Wold-style-definition -Werror  -Wl,--fatal-warnings
-
+ROOT_PATH=$(shell pwd)/..
 
 all: build clean
 
 build: bitvector.o libbitvector.a
-	mkdir -p ../bin && cp libbitvector.a ../bin/
+	mkdir -p ${ROOT_PATH}/bin && cp libbitvector.a ${ROOT_PATH}/bin/
 
-bitvector.o:
-	gcc ${FLAGS} -c bitvector.c -O9
+bitvector.o: bitvector.c
+	$(CC) ${CFLAGS} -c bitvector.c -O9 -o bitvector.o
 
 libbitvector.a:
 	ar rcs libbitvector.a bitvector.o

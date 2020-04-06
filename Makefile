@@ -1,6 +1,9 @@
 
 MODULES_DIRS := bitvector example
-FLAGS := -Wall -Wextra -Werror  -Wl,--fatal-warnings
+CFLAGS :=  -Wall -Wextra -std=c99 -pedantic -Wmissing-prototypes -Wstrict-prototypes \
+    -Wold-style-definition -Werror
+
+MAKE_FLAGS=CFLAGS="${CFLAGS}"
 
 build: modules
 
@@ -10,14 +13,14 @@ re: clean all
 
 clean:
 	for dir in ${MODULES_DIRS}; do \
-		$(MAKE) clean -C $$dir;  \
+		$(MAKE) clean -C $$dir ${MAKE_FLAGS};  \
 	done
 
 	rm -rf test/build/
 
 modules:
 	for dir in ${MODULES_DIRS}; do \
-		$(MAKE) -C $$dir; \
+		$(MAKE) -C $$dir ${MAKE_FLAGS}; \
 	done
 
 
