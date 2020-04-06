@@ -1,7 +1,7 @@
 
 MODULES_DIRS := bitvector example
 CFLAGS :=  -Wall -Wextra -std=c99 -pedantic -Wmissing-prototypes -Wstrict-prototypes \
-    -Wold-style-definition -Werror
+    -Wold-style-definition -Werror -O3
 
 MAKE_FLAGS=CFLAGS="${CFLAGS}"
 
