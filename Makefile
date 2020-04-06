@@ -2,7 +2,10 @@
 MODULES_DIRS := bitvector example
 FLAGS := -Wall -Wextra -Werror  -Wl,--fatal-warnings
 
-all: format modules
+build:
+	modules
+
+all: format modules test-all
 
 re: clean all
 
@@ -17,9 +20,11 @@ modules:
 	done
 
 
-
-
+test-all:
+	cd test && mkdir -p build && cd build && cmake .. && make && ./bitvector_test
 
 
 format:
 	find . -regex '.*\.\(c\|h\)' -exec clang-format -style=file -i {} \;
+
+
