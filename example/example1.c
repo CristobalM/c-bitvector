@@ -4,7 +4,8 @@
 
 int print_bitvector(struct bitvector *input_bitvector) {
   for (int i = 0; i < (int)input_bitvector->size_in_bits; i++) {
-    int result = bit_read(input_bitvector, i);
+    int result;
+    SAFE_OP(bit_read(input_bitvector, i, &result));
     if (result < 0) {
       printf("There was an error reading the bit at position %d\n", i);
       return result;

@@ -26,7 +26,8 @@
 
 #define BITMASK_FROM_POS_IN_BLOCK(pos_in_block) (1 << (31 - (pos_in_block)))
 
-uint32_t _extract_right_side(uint32_t input_block, uint32_t extract_index);
+static inline uint32_t _extract_right_side(uint32_t input_block,
+                                           uint32_t extract_index);
 
 int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_) {
   if (!input_bitvector)
@@ -55,7 +56,8 @@ int clean_bitvector(struct bitvector *input_bitvector) {
   return SUCCESS_ECODE;
 }
 
-int bit_read(struct bitvector *input_bitvector, uint32_t position) {
+int bit_read(struct bitvector *input_bitvector, uint32_t position,
+             int *result) {
   CHECK_BOUNDARIES(input_bitvector, position);
 
   BVCTYPE *container = input_bitvector->container;
@@ -63,12 +65,17 @@ int bit_read(struct bitvector *input_bitvector, uint32_t position) {
   uint32_t block_index = BLOCK_INDEX(BVCTYPE_BITS, position);
   uint32_t position_in_block = POSITION_IN_BLOCK(BVCTYPE_BITS, position);
   uint32_t pos_bitmask = BITMASK_FROM_POS_IN_BLOCK(position_in_block);
-  return (int)((pos_bitmask & container[block_index]) > 0 ? 1 : 0);
+
+  *result = (int)((pos_bitmask & container[block_index]) > 0 ? 1 : 0);
+
+  return SUCCESS_ECODE;
 }
 
 int bit_set(struct bitvector *input_bitvector, uint32_t position) {
   CHECK_BOUNDARIES(input_bitvector, position);
-  if (bit_read(input_bitvector, position))
+  int bit_is_set;
+  SAFE_OP(bit_read(input_bitvector, position, &bit_is_set));
+  if (bit_is_set)
     return SUCCESS_ECODE;
 
   BVCTYPE *container = input_bitvector->container;
@@ -84,7 +91,9 @@ int bit_set(struct bitvector *input_bitvector, uint32_t position) {
 
 int bit_clear(struct bitvector *input_bitvector, uint32_t position) {
   CHECK_BOUNDARIES(input_bitvector, position);
-  if (!bit_read(input_bitvector, position))
+  int bit_is_set;
+  SAFE_OP(bit_read(input_bitvector, position, &bit_is_set));
+  if (!bit_is_set)
     return SUCCESS_ECODE;
 
   BVCTYPE *container = input_bitvector->container;
@@ -98,7 +107,8 @@ int bit_clear(struct bitvector *input_bitvector, uint32_t position) {
   return SUCCESS_ECODE;
 }
 
-uint32_t _extract_right_side(uint32_t input_block, uint32_t extract_index) {
+static inline uint32_t _extract_right_side(uint32_t input_block,
+                                           uint32_t extract_index) {
   return input_block & ((1 << extract_index) - 1);
 }
 

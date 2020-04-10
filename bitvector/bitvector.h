@@ -30,7 +30,7 @@ struct bitvector {
 int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_);
 int clean_bitvector(struct bitvector *input_bitvector);
 
-int bit_read(struct bitvector *input_bitvector, uint32_t position);
+int bit_read(struct bitvector *input_bitvector, uint32_t position, int *result);
 int bit_set(struct bitvector *input_bitvector, uint32_t position);
 int bit_clear(struct bitvector *input_bitvector, uint32_t position);
 int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,

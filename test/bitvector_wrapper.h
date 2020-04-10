@@ -36,12 +36,13 @@ public:
   }
 
   bool bitread(uint32_t position) {
-    int err = bit_read(&bitvector_, position);
-    if (err < 0)
+    int result;
+    int err = bit_read(&bitvector_, position, &result);
+    if (err)
       throw runtime_error("there was an error during bitread " +
                           to_string(err));
 
-    return !!err;
+    return result;
   }
 
   void bitswrite(uint32_t from, uint32_t to, uint32_t to_write) {
