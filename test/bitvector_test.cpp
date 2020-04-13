@@ -30,6 +30,37 @@ TEST(some_bitvector_test_s, test1){
   ASSERT_FALSE(some_bitvector.bitread(5)) << "5 failed";
   ASSERT_FALSE(some_bitvector.bitread(6)) << "6 failed";
   ASSERT_FALSE(some_bitvector.bitread(7)) << "7 failed";
+}
 
+
+TEST(fills1000, test1){
+    BitvectorWrapper some_bitvector(1000);
+
+    for(int i = 0; i < 10; i++){
+      some_bitvector.bitset(i);
+    }
+
+    for(int i = 0; i < 10; i++){
+      ASSERT_TRUE(some_bitvector.bitread(i));
+    }
+
+    for(int i = 10; i < 1000; i++){
+      ASSERT_FALSE(some_bitvector.bitread(i));
+    }
 
 }
+
+
+TEST(prints100, test1){
+    BitvectorWrapper some_bitvector(100);
+
+    for(int i = 0; i < 10; i++){
+      some_bitvector.bitset(i);
+    }
+
+    for(int i = 0; i < 100; i++){
+      cout << some_bitvector.bitread(i) ? 1 : 0;
+    }
+    cout << endl;
+
+    }

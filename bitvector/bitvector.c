@@ -36,10 +36,8 @@ int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_) {
   input_bitvector->container_size =
       CONVERT_BITS_TO_CONTAINER_NUM(size_in_bits_, uint32_t);
   input_bitvector->container =
-      (uint32_t *)malloc(input_bitvector->container_size * sizeof(uint32_t));
+      (uint32_t *)calloc(input_bitvector->container_size, sizeof(uint32_t));
   input_bitvector->size_in_bits = size_in_bits_;
-
-  memset(input_bitvector->container, 0, input_bitvector->container_size);
 
   return SUCCESS_ECODE;
 }
