@@ -188,7 +188,7 @@ int bits_read(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
   uint32_t right_block = container[right_block_idx];
   uint32_t left_block = container[left_block_idx];
 
-  uint32_t to_shift_right = BVCTYPE_BITS - (right_pos_in_block - 1);
+  uint32_t to_shift_right = BVCTYPE_BITS - (right_pos_in_block + 1);
   uint32_t right_block_shifted = right_block >> to_shift_right;
 
   uint32_t left_shift = right_pos_in_block + 1;

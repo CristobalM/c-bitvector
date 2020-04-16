@@ -4,6 +4,7 @@
 
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -51,16 +52,16 @@ TEST(fills1000, test1){
 }
 
 
-TEST(prints100, test1){
-    BitvectorWrapper some_bitvector(100);
+TEST(borders_test, test1){
 
-    for(int i = 0; i < 10; i++){
-      some_bitvector.bitset(i);
+    string input_ = "11111111111111111111111111111111111111111111110011111111110011111111";
+    BitvectorWrapper some_bitvector(input_.size());
+    for(int i = 0; i < some_bitvector.size(); i++){
+      if(input_[i] == '1')
+        some_bitvector.bitset(i);
     }
 
-    for(int i = 0; i < 100; i++){
-      cout << some_bitvector.bitread(i) ? 1 : 0;
-    }
-    cout << endl;
 
-    }
+    uint32_t portion = some_bitvector.bitsread(56, 67);
+    ASSERT_EQ(3327, portion);
+}
