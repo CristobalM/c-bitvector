@@ -179,6 +179,10 @@ int bits_read(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
     uint32_t block = container[left_block_idx];
     uint32_t block_shifted = block >> (BVCTYPE_BITS - right_pos_in_block - 1);
     uint32_t bits_to_read = to - from + 1;
+    if(bits_to_read == BVCTYPE_BITS){
+      *result = block_shifted;
+      return SUCCESS_ECODE;
+    }
 
     *result = _extract_right_side(block_shifted, bits_to_read);
     return SUCCESS_ECODE;

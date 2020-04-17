@@ -45,6 +45,13 @@ public:
     return result;
   }
 
+  void bitclear(uint32_t position){
+    int err = bit_clear(&bitvector_, position);
+    if (err)
+      throw runtime_error("there was an error during bitclear " +
+                          to_string(err));
+  }
+
   void bitswrite(uint32_t from, uint32_t to, uint32_t to_write) {
     int err = bits_write(&bitvector_, from, to, to_write);
     if (err)
@@ -60,5 +67,12 @@ public:
                           to_string(err));
 
     return result;
+  }
+
+  uint32_t read_block(uint32_t block_index){
+    if(block_index > bitvector_.container_size){
+      throw runtime_error("block index out of range");
+    }
+    return bitvector_.container[block_index];
   }
 };
