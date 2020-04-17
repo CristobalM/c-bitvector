@@ -105,10 +105,30 @@ int bit_clear(struct bitvector *input_bitvector, uint32_t position) {
   return SUCCESS_ECODE;
 }
 
+uint32_t right_side_bitmasks[] = {
+        (1 << 0) - 1, (1 << 1) - 1, (1 << 2) - 1, // 0, 1, 3 -- ..000, ..001, ..011
+        (1 << 3) - 1, (1 << 4) - 1, (1 << 5) - 1, // 7, 15, 31 -- ..111, ..1111, ..11111
+        (1 << 6) - 1, (1 << 7) - 1, (1 << 8) - 1, // 63, 127, 255
+        (1 << 9) - 1, (1 << 10) - 1, (1 << 11) - 1, // 511, 1023, 2047
+        (1 << 12) - 1, (1 << 13) - 1, (1 << 14) - 1, // 4095, 8191, ...
+        (1 << 15) - 1, (1 << 16) - 1, (1 << 17) - 1,
+        (1 << 18) - 1, (1 << 19) - 1, (1 << 20) - 1,
+        (1 << 21) - 1, (1 << 22) - 1, (1 << 23) - 1,
+        (1 << 24) - 1, (1 << 25) - 1, (1 << 26) - 1,
+        (1 << 27) - 1, (1 << 28) - 1, (1 << 29) - 1,
+        (1 << 30) - 1, (1 << 31) - 1, (uint32_t )-1
+        // 13 mod (1 << 3) = 13 mod 8 ?... 13 = 8 + 4 + 1 = 0001101... 8 = 00001000, 7 = 00000111
+        // also 13 mod 8 = 5; 0001101 & 00000111 = 0000101 = 4 + 1 = 5 !
+        // 1 << x = 2^x
+        // rightSideBitMasks[i] = (1 << i) - 1; 0 <= i <= 31
+        // x mod (1 << y) = x & ((1 << y) - 1) = x & rightSideBitMasks[y]
+};
+
 static inline uint32_t _extract_right_side(uint32_t input_block,
                                            uint32_t extract_index) {
-  return input_block & ((1 << extract_index) - 1);
+  return input_block & right_side_bitmasks[extract_index];
 }
+
 
 int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
                uint32_t to_write) {
@@ -132,7 +152,7 @@ int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
 
   if (left_block_idx == right_block_idx) {
     uint32_t parts_to_remove_rshift = left_block >> right_bits_to_right;
-
+    uint32_t right_side_extracted = _extract_right_side(parts_to_remove_rshift, bits_to_write);
     uint32_t part_to_remove =
         _extract_right_side(parts_to_remove_rshift, bits_to_write)
         << right_bits_to_right;

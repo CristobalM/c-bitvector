@@ -137,5 +137,25 @@ TEST(writeT, test2){
   uint32_t read_value = bv.bitsread(32, 63);
   cout << bv.read_block(0) << ", " << bv.read_block(1) << endl;
   ASSERT_EQ(to_write, read_value);
+}
+
+TEST(debug, d1){
+  uint32_t a = 1<<31;
+  cout << a << ", " << (a << 1) << endl;
+  cout << "chao" << endl;
+}
+
+TEST(writeT, test3){
+  BitvectorWrapper bv(128);
+  bv.get_container()[0] = 3436182783;
+  bv.get_container()[1] = 3439316976;
+  uint32_t from = 28;
+  uint32_t to = 59;
+  uint32_t blockToShift = 40;
+  uint32_t shiftAmount = 4;
+  bv.bitswrite(from + shiftAmount, to + shiftAmount, blockToShift);
+  cout << "result" << endl;
+  cout << bv.get_container()[0] << endl;
+  cout << bv.get_container()[1] << endl;
 
 }

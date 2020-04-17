@@ -75,4 +75,8 @@ public:
     }
     return bitvector_.container[block_index];
   }
+
+  uint32_t *get_container(){
+    return bitvector_.container;
+  }
 };

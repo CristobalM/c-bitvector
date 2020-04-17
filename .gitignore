@@ -1,0 +1,5 @@
+test/.idea/
+test/build/
+test/cmake-build-debug/
+.vscode/
+bin/
