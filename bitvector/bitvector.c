@@ -106,29 +106,28 @@ int bit_clear(struct bitvector *input_bitvector, uint32_t position) {
 }
 
 uint32_t right_side_bitmasks[] = {
-        (1u << 0u) - 1u, (1u << 1) - 1, (1u << 2) - 1, // 0, 1, 3 -- ..000, ..001, ..011
-        (1u << 3u) - 1u, (1u << 4) - 1, (1u << 5) - 1, // 7, 15, 31 -- ..111, ..1111, ..11111
-        (1u << 6u) - 1u, (1u << 7) - 1, (1u << 8) - 1, // 63, 127, 255
-        (1u << 9u) - 1u, (1u << 10) - 1, (1u << 11) - 1, // 511, 1023, 2047
-        (1u << 12u) - 1u, (1u << 13) - 1, (1u << 14) - 1, // 4095, 8191, ...
-        (1u << 15u) - 1u, (1u << 16) - 1, (1u << 17) - 1,
-        (1u << 18u) - 1u, (1u << 19) - 1, (1u << 20) - 1,
-        (1u << 21u) - 1u, (1u << 22) - 1, (1u << 23) - 1,
-        (1u << 24u) - 1u, (1u << 25) - 1, (1u << 26) - 1,
-        (1u << 27u) - 1u, (1u << 28) - 1, (1u << 29) - 1,
-        (1u << 30u) - 1u, (1u << 31) - 1, (uint32_t )-1
-        // 13 mod (1 << 3) = 13 mod 8 ?... 13 = 8 + 4 + 1 = 0001101... 8 = 00001000, 7 = 00000111
-        // also 13 mod 8 = 5; 0001101 & 00000111 = 0000101 = 4 + 1 = 5 !
-        // 1 << x = 2^x
-        // rightSideBitMasks[i] = (1 << i) - 1; 0 <= i <= 31
-        // x mod (1 << y) = x & ((1 << y) - 1) = x & rightSideBitMasks[y]
+    (1u << 0u) - 1u,  (1u << 1) - 1,    (1u << 2) - 1,  // 0, 1, 3 -- ..000,
+                                                        // ..001, ..011
+    (1u << 3u) - 1u,  (1u << 4) - 1,    (1u << 5) - 1,  // 7, 15, 31 -- ..111,
+                                                        // ..1111, ..11111
+    (1u << 6u) - 1u,  (1u << 7) - 1,    (1u << 8) - 1,  // 63, 127, 255
+    (1u << 9u) - 1u,  (1u << 10) - 1,   (1u << 11) - 1, // 511, 1023, 2047
+    (1u << 12u) - 1u, (1u << 13) - 1,   (1u << 14) - 1, // 4095, 8191, ...
+    (1u << 15u) - 1u, (1u << 16) - 1,   (1u << 17) - 1,   (1u << 18u) - 1u,
+    (1u << 19) - 1,   (1u << 20) - 1,   (1u << 21u) - 1u, (1u << 22) - 1,
+    (1u << 23) - 1,   (1u << 24u) - 1u, (1u << 25) - 1,   (1u << 26) - 1,
+    (1u << 27u) - 1u, (1u << 28) - 1,   (1u << 29) - 1,   (1u << 30u) - 1u,
+    (1u << 31) - 1,   (uint32_t)-1
+    // 13 mod (1 << 3) = 13 mod 8 ?... 13 = 8 + 4 + 1 = 0001101... 8 = 00001000,
+    // 7 = 00000111 also 13 mod 8 = 5; 0001101 & 00000111 = 0000101 = 4 + 1 = 5
+    // ! 1 << x = 2^x rightSideBitMasks[i] = (1 << i) - 1; 0 <= i <= 31 x mod (1
+    // << y) = x & ((1 << y) - 1) = x & rightSideBitMasks[y]
 };
 
 static inline uint32_t _extract_right_side(uint32_t input_block,
                                            uint32_t extract_index) {
   return input_block & right_side_bitmasks[extract_index];
 }
-
 
 int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
                uint32_t to_write) {
@@ -198,7 +197,7 @@ int bits_read(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
     uint32_t block = container[left_block_idx];
     uint32_t block_shifted = block >> (BVCTYPE_BITS - right_pos_in_block - 1);
     uint32_t bits_to_read = to - from + 1;
-    if(bits_to_read == BVCTYPE_BITS){
+    if (bits_to_read == BVCTYPE_BITS) {
       *result = block_shifted;
       return SUCCESS_ECODE;
     }
