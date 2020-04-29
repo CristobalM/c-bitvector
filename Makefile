@@ -1,5 +1,5 @@
 
-MODULES_DIRS := bitvector example
+MODULES_DIRS := src example
 CFLAGS :=  -Wall -Wextra -std=c99 -pedantic -Wmissing-prototypes -Wstrict-prototypes \
     -Wold-style-definition -Werror -O3
 
@@ -31,5 +31,5 @@ test-all:
 format:
 	find . -regex '.*\.\(c\|h\)' -exec clang-format -style=file -i {} \;
 
-cleanall: clean
+clean-all: clean
 	rm -rf bin

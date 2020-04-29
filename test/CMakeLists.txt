@@ -5,10 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
-include_directories(../bitvector)
+include_directories(../include)
 
 
-add_library(bitvector ../bitvector/bitvector.h ../bitvector/bitvector.c)
+add_library(bitvector ../include/bitvector.h ../src/bitvector.c)
 
 ## TESTING
 

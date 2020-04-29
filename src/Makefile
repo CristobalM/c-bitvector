@@ -1,6 +1,6 @@
 ROOT_PATH=$(shell pwd)/..
 
-all: build clean
+all: build
 
 build: libbitvector.a libbitvector_se.a
 	mkdir -p ${ROOT_PATH}/bin && cp libbitvector.a ${ROOT_PATH}/bin/

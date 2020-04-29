@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../bitvector/bitvector.h"
+#include <bitvector.h>
 
 int print_bitvector(struct bitvector *input_bitvector) {
   for (int i = 0; i < (int)input_bitvector->size_in_bits; i++) {
