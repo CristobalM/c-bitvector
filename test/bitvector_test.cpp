@@ -18,11 +18,6 @@ TEST(some_bitvector_test_s, test1){
   bool bitread_0 =  some_bitvector.bitread(0);
   uint32_t bits_read_ = some_bitvector.bitsread(0, 7);
 
-  cout << "bitvector bits " << some_bitvector.size() << endl;
-  cout << "bitvector size " << some_bitvector.container_size() << endl;
-  cout << "bitvector read " << bits_read_<< endl;
-  
-
   ASSERT_TRUE(bitread_0) << "0 failed";
   ASSERT_TRUE(some_bitvector.bitread(1)) << "1 failed";
   ASSERT_TRUE(some_bitvector.bitread(2)) << "2 failed";
@@ -135,27 +130,5 @@ TEST(writeT, test2){
 
   bv.bitswrite(32, 63, to_write);
   uint32_t read_value = bv.bitsread(32, 63);
-  cout << bv.read_block(0) << ", " << bv.read_block(1) << endl;
   ASSERT_EQ(to_write, read_value);
-}
-
-TEST(debug, d1){
-  uint32_t a = 1<<31;
-  cout << a << ", " << (a << 1) << endl;
-  cout << "chao" << endl;
-}
-
-TEST(writeT, test3){
-  BitvectorWrapper bv(128);
-  bv.get_container()[0] = 3436182783;
-  bv.get_container()[1] = 3439316976;
-  uint32_t from = 28;
-  uint32_t to = 59;
-  uint32_t blockToShift = 40;
-  uint32_t shiftAmount = 4;
-  bv.bitswrite(from + shiftAmount, to + shiftAmount, blockToShift);
-  cout << "result" << endl;
-  cout << bv.get_container()[0] << endl;
-  cout << bv.get_container()[1] << endl;
-
 }
