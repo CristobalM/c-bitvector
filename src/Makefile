@@ -7,10 +7,10 @@ build: libbitvector.a libbitvector_se.a
 	cp libbitvector_se.a ${ROOT_PATH}/bin/
 
 bitvector.o: bitvector.c
-	$(CC) ${CFLAGS} -c bitvector.c -o bitvector.o
+	$(CC) ${CFLAGS} -c bitvector.c -o bitvector.o ${INCLUDES}
 
 bitvector_se.o: bitvector.c
-	$(CC) -fPIC ${CFLAGS} -c bitvector.c -o bitvector_se.o
+	$(CC) -fPIC ${CFLAGS} -c bitvector.c -o bitvector_se.o ${INCLUDES}
 
 libbitvector.a: bitvector.o
 	ar rcs libbitvector.a bitvector.o

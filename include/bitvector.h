@@ -10,15 +10,6 @@
 #define ERR_OUT_OF_BOUNDARIES -3
 #define ERR_BITS_WRITE_FROM_GT_TO -4
 
-#define SAFE_OP(op)                                                            \
-  do {                                                                         \
-    if ((op) != SUCCESS_ECODE) {                                               \
-      printf("There was an error while running %s. Error code: %d\n", (#op),   \
-             (op));                                                            \
-      return (op);                                                             \
-    }                                                                          \
-  } while (0)
-
 typedef uint32_t BVCTYPE;
 
 struct bitvector {

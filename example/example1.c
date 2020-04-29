@@ -2,6 +2,17 @@
 
 #include <bitvector.h>
 
+// Dont want to pollute the header file with this, so it is duplicated
+#define SAFE_OP(op)                                                            \
+  do {                                                                         \
+    if ((op) != SUCCESS_ECODE) {                                               \
+      printf("There was an error while running %s. Error code: %d\n", (#op),   \
+             (op));                                                            \
+      return (op);                                                             \
+    }                                                                          \
+  } while (0)
+
+
 int print_bitvector(struct bitvector *input_bitvector) {
   for (int i = 0; i < (int)input_bitvector->size_in_bits; i++) {
     int result;

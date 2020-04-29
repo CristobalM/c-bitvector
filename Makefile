@@ -1,9 +1,13 @@
 
+CURRENT_PATH=$(shell pwd)
+
 MODULES_DIRS := src example
 CFLAGS :=  -Wall -Wextra -std=c99 -pedantic -Wmissing-prototypes -Wstrict-prototypes \
     -Wold-style-definition -Werror -O3
 
-MAKE_FLAGS=CFLAGS="${CFLAGS}"
+INCLUDES=-I${CURRENT_PATH}/include
+
+MAKE_FLAGS=CFLAGS="${CFLAGS}" INCLUDES="${INCLUDES}"
 
 build: modules
 
@@ -13,7 +17,7 @@ re: clean all
 
 clean:
 	for dir in ${MODULES_DIRS}; do \
-		$(MAKE) clean -C $$dir ${MAKE_FLAGS};  \
+		$(MAKE) clean -C $$dir;  \
 	done
 
 	rm -rf test/build/
