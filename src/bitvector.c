@@ -4,7 +4,6 @@
 
 #include <bitvector.h>
 
-
 #define SAFE_OP(op)                                                            \
   do {                                                                         \
     if ((op) != SUCCESS_ECODE) {                                               \

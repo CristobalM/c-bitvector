@@ -16,6 +16,8 @@ struct bitvector {
   BVCTYPE *container;
   uint32_t size_in_bits;
   uint32_t container_size;
+
+  uint32_t alloc_tag;
 };
 
 int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_);

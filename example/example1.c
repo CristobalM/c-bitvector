@@ -12,7 +12,6 @@
     }                                                                          \
   } while (0)
 
-
 int print_bitvector(struct bitvector *input_bitvector) {
   for (int i = 0; i < (int)input_bitvector->size_in_bits; i++) {
     int result;
