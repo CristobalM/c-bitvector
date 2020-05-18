@@ -16,6 +16,10 @@ LIGHT_FLAGS=CFLAGS="${CFLAGS} ${LIGHT}" INCLUDES="${INCLUDES}"
 
 build: modules
 
+build-light: light-modules
+
+build-very-light: very-light-modules
+
 all: format modules test-all
 
 all-light: format light-modules test-all
