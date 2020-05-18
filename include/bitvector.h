@@ -10,24 +10,39 @@
 #define ERR_OUT_OF_BOUNDARIES -3
 #define ERR_BITS_WRITE_FROM_GT_TO -4
 
+// TODO: refactor to allow custom BVCTYPE
 typedef uint32_t BVCTYPE;
+
+#ifdef VERY_LIGHT_FIELDS
+typedef uint16_t SZ_BITS_T;
+typedef uint8_t ALLOC_TAG_T;
+typedef uint8_t CONTAINER_SZ_T;
+#elif defined(LIGHT_FIELDS)
+typedef uint32_t SZ_BITS_T;
+typedef uint8_t ALLOC_TAG_T;
+typedef uint16_t CONTAINER_SZ_T;
+#else
+typedef uint32_t SZ_BITS_T;
+typedef uint32_t ALLOC_TAG_T;
+typedef uint32_t CONTAINER_SZ_T;
+#endif
 
 struct bitvector {
   BVCTYPE *container;
-  uint32_t size_in_bits;
-  uint32_t container_size;
+  SZ_BITS_T size_in_bits;
+  CONTAINER_SZ_T container_size;
 
-  uint32_t alloc_tag;
+  ALLOC_TAG_T alloc_tag;
 };
 
-int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_);
+int init_bitvector(struct bitvector *input_bitvector, SZ_BITS_T size_in_bits_);
 int clean_bitvector(struct bitvector *input_bitvector);
 
 int bit_read(struct bitvector *input_bitvector, uint32_t position, int *result);
 int bit_set(struct bitvector *input_bitvector, uint32_t position);
 int bit_clear(struct bitvector *input_bitvector, uint32_t position);
 int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
-               uint32_t to_write);
+               BVCTYPE to_write);
 int bits_read(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
               uint32_t *result);
 
