@@ -38,14 +38,14 @@
 static inline uint32_t _extract_right_side(uint32_t input_block,
                                            uint32_t extract_index);
 
-int init_bitvector(struct bitvector *input_bitvector, uint32_t size_in_bits_) {
+int init_bitvector(struct bitvector *input_bitvector, SZ_BITS_T size_in_bits_) {
   if (!input_bitvector)
     return ERR_NULL_BITVECTOR;
 
   input_bitvector->container_size =
-      CONVERT_BITS_TO_CONTAINER_NUM(size_in_bits_, uint32_t);
+      CONVERT_BITS_TO_CONTAINER_NUM(size_in_bits_, BVCTYPE);
   input_bitvector->container =
-      (uint32_t *)calloc(input_bitvector->container_size, sizeof(uint32_t));
+      (BVCTYPE *)calloc(input_bitvector->container_size, sizeof(BVCTYPE));
   input_bitvector->size_in_bits = size_in_bits_;
 
   return SUCCESS_ECODE;
@@ -126,12 +126,7 @@ uint32_t right_side_bitmasks[] = {
     (1u << 19) - 1, (1u << 20) - 1, (1u << 21u) - 1u, (1u << 22) - 1,
     (1u << 23) - 1, (1u << 24u) - 1u, (1u << 25) - 1, (1u << 26) - 1,
     (1u << 27u) - 1u, (1u << 28) - 1, (1u << 29) - 1, (1u << 30u) - 1u,
-    (1u << 31) - 1, (uint32_t)-1
-    // 13 mod (1 << 3) = 13 mod 8 ?... 13 = 8 + 4 + 1 = 0001101... 8 = 00001000,
-    // 7 = 00000111 also 13 mod 8 = 5; 0001101 & 00000111 = 0000101 = 4 + 1 = 5
-    // ! 1 << x = 2^x rightSideBitMasks[i] = (1 << i) - 1; 0 <= i <= 31 x mod (1
-    // << y) = x & ((1 << y) - 1) = x & rightSideBitMasks[y]
-};
+    (1u << 31) - 1, (uint32_t)-1};
 
 static inline uint32_t _extract_right_side(uint32_t input_block,
                                            uint32_t extract_index) {
@@ -139,7 +134,7 @@ static inline uint32_t _extract_right_side(uint32_t input_block,
 }
 
 int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
-               uint32_t to_write) {
+               BVCTYPE to_write) {
   CHECK_BOUNDARIES(input_bitvector, from);
   CHECK_BOUNDARIES(input_bitvector, to);
   if (from > to) {
@@ -155,7 +150,7 @@ int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
 
   uint32_t bits_to_write = to - from + 1;
 
-  uint32_t left_block = container[left_block_idx];
+  BVCTYPE left_block = container[left_block_idx];
   uint32_t right_bits_to_right = BVCTYPE_BITS - right_pos_in_block - 1;
 
   if (left_block_idx == right_block_idx) {
@@ -167,7 +162,7 @@ int bits_write(struct bitvector *input_bitvector, uint32_t from, uint32_t to,
 
     container[left_block_idx] += part_to_add - part_to_remove;
   } else {
-    uint32_t right_block = container[right_block_idx];
+    BVCTYPE right_block = container[right_block_idx];
     uint32_t right_block_keep_part =
         _extract_right_side(right_block, right_bits_to_right);
     uint32_t right_extract_to_add =
