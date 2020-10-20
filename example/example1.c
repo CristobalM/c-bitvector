@@ -12,22 +12,9 @@
     }                                                                          \
   } while (0)
 
-int print_bitvector(struct bitvector *input_bitvector) {
-  for (int i = 0; i < (int)input_bitvector->size_in_bits; i++) {
-    int result;
-    SAFE_OP(bit_read(input_bitvector, i, &result));
-    if (result < 0) {
-      printf("There was an error reading the bit at position %d\n", i);
-      return result;
-    }
-    int printable_bitread = result > 0 ? 1 : 0;
-    printf("%i", printable_bitread);
-  }
-  printf("\n");
-  return 0;
-}
+int print_bitvector(struct bitvector *input_bitvector);
 
-int main(int argc, char **argv) {
+int main(void) {
   struct bitvector some_bitvector;
   uint32_t bv_size = 8;
 
@@ -38,7 +25,7 @@ int main(int argc, char **argv) {
   printf("BEFORE FILLING WITH ONES\n");
   SAFE_OP(print_bitvector(&some_bitvector));
 
-  for (int i = 0; i < some_bitvector.size_in_bits; i++) {
+  for (int i = 0; i < (int)some_bitvector.size_in_bits; i++) {
     SAFE_OP(bit_set(&some_bitvector, (uint32_t)i));
   }
   printf("AFTER FILLING WITH ONES\n");
@@ -67,5 +54,20 @@ int main(int argc, char **argv) {
   SAFE_OP(clean_bitvector(&some_bitvector));
   printf("The bitvector was cleaned\n");
 
+  return 0;
+}
+
+int print_bitvector(struct bitvector *input_bitvector) {
+  for (int i = 0; i < (int)input_bitvector->size_in_bits; i++) {
+    int result;
+    SAFE_OP(bit_read(input_bitvector, i, &result));
+    if (result < 0) {
+      printf("There was an error reading the bit at position %d\n", i);
+      return result;
+    }
+    int printable_bitread = result > 0 ? 1 : 0;
+    printf("%i", printable_bitread);
+  }
+  printf("\n");
   return 0;
 }

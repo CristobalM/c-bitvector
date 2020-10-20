@@ -15,15 +15,12 @@ typedef uint32_t BVCTYPE;
 
 #ifdef VERY_LIGHT_FIELDS
 typedef uint16_t SZ_BITS_T;
-typedef uint16_t ALLOC_TAG_T;
 typedef uint8_t CONTAINER_SZ_T;
 #elif defined(LIGHT_FIELDS)
 typedef uint32_t SZ_BITS_T;
-typedef uint8_t ALLOC_TAG_T;
 typedef uint16_t CONTAINER_SZ_T;
 #else
 typedef uint32_t SZ_BITS_T;
-typedef uint32_t ALLOC_TAG_T;
 typedef uint32_t CONTAINER_SZ_T;
 #endif
 
@@ -31,8 +28,6 @@ struct bitvector {
   BVCTYPE *container;
   SZ_BITS_T size_in_bits;
   CONTAINER_SZ_T container_size;
-
-  ALLOC_TAG_T alloc_tag;
 };
 
 int init_bitvector(struct bitvector *input_bitvector, SZ_BITS_T size_in_bits_);
